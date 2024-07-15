@@ -1,52 +1,89 @@
-import { View, Text, SafeAreaView, StyleSheet, Dimensions, Image } from 'react-native'
-import React, { Children } from 'react'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router';
+import React from 'react';
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+const Welcome2 = () => {
 
-
-const Welcome = () => {
-
-  const { height, width } = Dimensions.get('window')
   return (
-    <SafeAreaView
-      style={styles.mainWrapper}
-    >
+    <SafeAreaView style={styles.mainWrapper}>
       <View
-        style={styles.imageWrapper}
+        style={styles.parentWrapper}
       >
-        <Image
-          style={styles.imageOne}
-          source={require(`../../assets/images/1.jpg`)} />
-        <ImageWrapper
-          top={-30}
+
+
+        <View
+          style={styles.firstSection}
         >
           <Image
-            style={styles.image}
-            source={require(`../../assets/images/2.jpg`)} />
-      </ImageWrapper>
-         
-        <Image
-          style={styles.image}
-          source={require(`../../assets/images/3.jpg`)} />
-        <Image
-          style={styles.image}
-          source={require(`../../assets/images/4.jpg`)} />
+            style={styles.imageOne}
+            source={require(`../../assets/images/1.jpg`)} />
+          <ImageWrapper
+            top={20}
+          >
+            <Image
+              style={styles.image}
+              source={require(`../../assets/images/2.jpg`)} />
+          </ImageWrapper>
+          <ImageWrapper
+            top={120}
+            left={290}
+          >
+            <Image
+              style={styles.image}
+              source={require(`../../assets/images/2.jpg`)} />
+          </ImageWrapper>
+          <ImageWrapper
+            top={170}
+            left={30}
+          >
+            <Image
+              style={styles.image}
+              source={require(`../../assets/images/3.jpg`)} />
+          </ImageWrapper>
 
+        </View>
+
+
+        <View
+          style={styles.secondSection}
+        >
+          <Text style={styles.descTitle}>All Your Favourite Foods</Text>
+          <Text style={[styles.descTitle, { fontSize: 14, marginTop: 4 }]}>
+            Lorem ipsum dolor sit, odio aspernatur, assumenda libero rem suscipit qui a debitis. Eum, omnis!
+          </Text>
+
+
+        </View>
+
+        <View
+          style={styles.buttonWrapper}
+        >
+          <Image source={require("../../assets/images/dot.png")} style={{ height: 40, width: 40 }} />
+          <TouchableOpacity
+            onPress={() => router.navigate('(onboarding)/Welcome2')}
+            style={[styles.button]}>
+            <Text style={[styles.buttonText, { color: 'white' }]} >
+              Continue
+            </Text>
+          </TouchableOpacity>
+          <Link style={[styles.buttonText, styles.button, { backgroundColor: "#91EE91", textAlign: 'center' }]} href="/authentication/SignIn">
+            Sign In
+          </Link>
+        </View>
       </View>
-      <Link
-        href={'(onboarding)/Welcome2'}
-      >
-        Click Here
-      </Link>
+
+
     </SafeAreaView>
-  )
+  );
 }
 
 interface Props {
-  children: React.ReactNode, 
-  top:number
+  children: React.ReactNode,
+  top: number,
+  left?: number
 }
-function ImageWrapper({children,top}:Props) {
+
+function ImageWrapper({ children, top, left }: Props) {
   return <View
     style={[{
       width: 55,
@@ -58,40 +95,86 @@ function ImageWrapper({children,top}:Props) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      top: top
+      top: top,
+      left: left ? left : null
     }]}
   >
-    { children }
+    {children}
   </View>
-}
-
+};
 
 const styles = StyleSheet.create({
+  parentWrapper: {
+    flex: 1,
+  },
+  firstSection: {
+    flex: 2,
+    backgroundColor: 'white',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  secondSection: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '80%',
+    marginHorizontal: 'auto',
+    marginVertical: 3,
+
+  },
   mainWrapper: {
     display: 'flex',
     flex: 1,
-    backgroundColor: 'white'
-
+    backgroundColor: 'white',
   },
   image: {
     width: 50,
     height: 50,
     position: 'absolute',
-    borderRadius: 100, 
+    borderRadius: 100,
   },
   imageOne: {
-    width: '70%', 
-    height: '100%', 
-    borderRadius:165
+    width: '60%',
+    height: '60%',
+    borderRadius: 165,
   },
   imageWrapper: {
-    top:30,
-    height: '40%', 
-    display: 'flex', 
+    width: 55,
+    height: 55,
+    padding: 0,
+    borderRadius: 120,
+    position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center', 
-    position:'relative'
-  }
-})
+    justifyContent: 'center',
+  },
 
-export default Welcome
+  descTitle: {
+    fontFamily: 'semiBold',
+    fontSize: 30,
+    textAlign: 'center',
+  },
+  buttonWrapper: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  button: {
+    width: 320,
+    height: 50,
+    marginHorizontal: 'auto',
+    backgroundColor: '#0A420A',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginBottom: 7,
+  },
+  buttonText: {
+    color: '#0A420A',
+    fontSize: 18,
+    fontFamily: 'semiBold',
+  },
+});
+
+export default Welcome2;
