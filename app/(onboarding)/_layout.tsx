@@ -11,12 +11,13 @@ const Layout = () => {
     return (
         <Stack
             screenOptions={{
-                headerShadowVisible:false,
+                
+                headerShadowVisible: false,
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    backgroundColor: '#fff', 
+                    backgroundColor: '#fff',
                 },
-                
+
                 headerTitle: () =>
                     <View
                         style={styles.header}
@@ -41,6 +42,7 @@ const Layout = () => {
             />
             <Stack.Screen
                 name="Welcome2"
+            
             />
         </Stack>
     )
@@ -49,14 +51,14 @@ const Layout = () => {
 
 const styles = StyleSheet.create({
     headerTitle: {
-        fontFamily: 'semiBold',
+        fontFamily: 'regular',
         letterSpacing: 2,
         fontSize: 25,
         color: 'black',
 
     },
     header: {
-        height: 80,
+        // height: 60,
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'center',
