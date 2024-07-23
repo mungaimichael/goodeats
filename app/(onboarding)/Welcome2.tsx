@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Welcome2 = () => {
-    
+
     return (
         <SafeAreaView style={styles.mainWrapper}>
             <View
@@ -52,7 +52,7 @@ const Welcome2 = () => {
                         Lorem ipsum dolor sit, odio aspernatur, assumenda libero rem suscipit qui a debitis. Eum, omnis!
                     </Text>
 
-                    
+
                 </View>
 
                 <View
@@ -60,10 +60,10 @@ const Welcome2 = () => {
                 >
                     <Image source={require("../../assets/images/dot.png")} style={{ height: 40, width: 40 }} />
                     <TouchableOpacity
-                        onPress={()=>router.push('(auth)/Signup')}
+                        onPress={() => router.push('(auth)/Signup')}
                         style={[styles.button]}>
                         <Text style={[styles.buttonText, { color: 'white' }]} >
-                            Get Starteddd
+                            Get Started
                         </Text>
                     </TouchableOpacity>
                     <Link style={[styles.buttonText, styles.button, { backgroundColor: "#91EE91", textAlign: 'center' }]} href="/authentication/SignIn">
@@ -72,7 +72,7 @@ const Welcome2 = () => {
                 </View>
             </View>
 
-    
+
         </SafeAreaView>
     );
 }
@@ -105,17 +105,17 @@ function ImageWrapper({ children, top, left }: Props) {
 
 const styles = StyleSheet.create({
     parentWrapper: {
-        flex: 1, 
+        flex: 1,
     },
     firstSection: {
-        flex: 2, 
-        backgroundColor: 'white', 
-        position: 'relative', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        flex: 2,
+        backgroundColor: 'white',
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     secondSection: {
-        flex: 1, 
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
         width: '80%',

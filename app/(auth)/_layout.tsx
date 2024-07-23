@@ -30,7 +30,7 @@ export default function Layout() {
                     </TouchableOpacity>
                 ),
                 headerStyle: {
-                    backgroundColor: theme.dark === true ? "black" : "white",
+                    backgroundColor: theme.dark === true ? "white" : "white",
 
                 },
                 headerShadowVisible: false,
