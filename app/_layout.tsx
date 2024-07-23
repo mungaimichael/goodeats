@@ -8,6 +8,10 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import store from '@/redux/store';
+
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -37,12 +41,14 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar
-          style={colorScheme === 'dark' ? "dark" : 'dark'}
-        />
-        <Slot />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <StatusBar
+            style={colorScheme === 'dark' ? "dark" : 'dark'}
+          />
+          <Slot />
+        </ThemeProvider>
+      </Provider>
     </GestureHandlerRootView>
   );
 }
