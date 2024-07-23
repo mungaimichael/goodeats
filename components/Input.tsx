@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import { initNewUser } from "@/redux/UserDetailsSlice";
+import { useEffect, useState } from "react";
+import { Text, View, TextInput, StyleSheet, Pressable } from "react-native";
+import { useDispatch } from "react-redux";
 
 interface InputArgs {
     label: string;
@@ -15,6 +17,12 @@ interface FormValues {
 }
 
 export default function Input({ label, ph, showPw, fieldName }: InputArgs) {
+
+
+
+
+
+
     const [formValues, setFormValues] = useState<FormValues>({
         name: '',
         email: '',
@@ -26,7 +34,9 @@ export default function Input({ label, ph, showPw, fieldName }: InputArgs) {
             ...prevValues,
             [fieldName]: value
         }));
+        console.log(formValues)
     }
+
 
     return (
         <View style={{ width: '100%', height: 35, marginTop: 10 }}>
