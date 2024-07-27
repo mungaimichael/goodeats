@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { addQueryString, fetchChatData } from "@/redux/DataFetchSlice";
+import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring } from "react-native-reanimated"
 
+import { useDispatch, UseDispatch, useSelector } from "react-redux";
 
+const {
+    GoogleGenerativeAI,
+    HarmCategory,
+    HarmBlockThreshold,
+} = require("@google/generative-ai");
 
 export default function HomeInput() {
 
     const [search, setSearch] = useState<string>('')
 
     const [userIngredients, setUserIngredients] = useState<string[]>([
-        'Meat', 'Pork'
     ]);
 
 
@@ -22,6 +28,39 @@ export default function HomeInput() {
             opacity: opacitySv.value + 1
         }
     })
+
+
+    // redux logic
+    const dispatch = useDispatch()
+
+
+
+    // const apiKey = process.env.GEMINI_API_KEY;
+
+    // const genAI = new GoogleGenerativeAI(process.env.EXPO_PUBLIC_API_KEY);
+
+
+    // const model = genAI.getGenerativeModel({
+    //     model: "gemini-1.5-flash",
+    // });
+
+    // model config 
+
+    // const generationConfig = {
+    //     temperature: 1,
+    //     topP: 0.95,
+    //     topK: 64,
+    //     maxOutputTokens: 8192,
+    //     responseMimeType: "text/plain",
+    // };
+    // useEffect(() => {
+
+
+    //     fetch(search)
+    // }, []);
+
+
+    const { query, searchedData, loading, error } = useSelector((state) => state.queryData);
     return (
 
         <View>
@@ -31,7 +70,10 @@ export default function HomeInput() {
 
                 <Pressable
                     disabled={search === '' ? true : false}
-                    onPress={(val) => { setSearch(""); setUserIngredients(prev => [...prev, search]); }}
+                    onPress={(val) => {
+                        setUserIngredients(prev => [...prev, search]);
+                        dispatch(addQueryString({ query: search }))
+                    }}
                     style={styles.button}
 
 
@@ -71,6 +113,10 @@ export default function HomeInput() {
             />
             <Pressable
                 style={styles.formBtn}
+                onPress={() => {
+                    console.log(loading, error, searchedData, query);
+                    // dispatch(fetchChatData(search))
+                }}
             >
                 <Text
                     style={{ fontFamily: 'semiBold', fontSize: 17, color: '#fff' }}

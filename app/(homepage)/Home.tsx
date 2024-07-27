@@ -1,32 +1,37 @@
 
 
 import HomeInput from "@/components/HomeInput";
+import Recipes from "@/components/Recipes";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 
 export default function Home() {
 
-
+    const { height } = Dimensions.get('screen')
 
     return (
-        <Animated.View
-            entering={FadeInDown}
-
-            style={[styles.mainWrapper]}
+        <View
+            style={{ backgroundColor: '#fff', }}
         >
-            <View
-                style={styles.contentWrapper}
-            >
-                <HomeInput />
-            </View>
+            <Animated.View
+                entering={FadeIn}
 
-        </Animated.View>
+                style={[styles.mainWrapper, { height: height / 7 }]}
+            >
+                <View
+                    style={styles.contentWrapper}
+                >
+                    <HomeInput />
+                </View>
+            </Animated.View>
+
+            <Recipes />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     mainWrapper: {
-        flex: 1,
         width: '100%',
         marginHorizontal: 'auto',
         backgroundColor: 'white'
