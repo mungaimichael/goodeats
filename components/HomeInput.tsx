@@ -20,6 +20,8 @@ export default function HomeInput() {
 
 
     const AniText = Animated.createAnimatedComponent(Text)
+
+
     const opacitySv = useSharedValue(0);
 
 
@@ -35,35 +37,11 @@ export default function HomeInput() {
 
 
 
-    // const apiKey = process.env.GEMINI_API_KEY;
 
-    // const genAI = new GoogleGenerativeAI(process.env.EXPO_PUBLIC_API_KEY);
-
-
-    // const model = genAI.getGenerativeModel({
-    //     model: "gemini-1.5-flash",
-    // });
-
-    // model config 
-
-    // const generationConfig = {
-    //     temperature: 1,
-    //     topP: 0.95,
-    //     topK: 64,
-    //     maxOutputTokens: 8192,
-    //     responseMimeType: "text/plain",
-    // };
-    // useEffect(() => {
-
-
-    //     fetch(search)
-    // }, []);
-
-
-    const { query, searchedData, loading, error } = useSelector((state) => state.queryData);
+    const { query, searchedData, loading, error } = useSelector((state: any) => state.queryData);
     return (
 
-        <View>
+        <>
             <Animated.View
                 style={styles.inputWrapper}
             >
@@ -91,9 +69,21 @@ export default function HomeInput() {
                     style={styles.input}
                     placeholder="Add Ingredients to Search"
                 >
+
                 </TextInput>
 
-                {/* View to hold all user ingredients */}
+                <Pressable
+                    style={styles.search}
+                    onPress={() => {
+                        console.log(loading, error, searchedData, query);
+                        // dispatch(fetchChatData(search))
+                    }}
+                >
+                    <Image
+                        source={require("../assets/images/search.png")}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </Pressable>
 
 
 
@@ -105,26 +95,14 @@ export default function HomeInput() {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={userIngredients}
-                style={{ marginVertical: 15, }}
+                style={{ marginVertical: 10, }}
                 renderItem={({ item }) =>
                     <Text
                         style={{ fontFamily: 'light', fontSize: 15, flexDirection: 'row', flexWrap: "wrap", marginHorizontal: 5, }}
                     >{item}</Text>}
             />
-            <Pressable
-                style={styles.formBtn}
-                onPress={() => {
-                    console.log(loading, error, searchedData, query);
-                    // dispatch(fetchChatData(search))
-                }}
-            >
-                <Text
-                    style={{ fontFamily: 'semiBold', fontSize: 17, color: '#fff' }}
-                >
-                    Search Meals
-                </Text>
-            </Pressable>
-        </View>
+
+        </>
     )
 }
 
@@ -158,13 +136,15 @@ const styles = StyleSheet.create({
         zIndex: 1,
 
     },
-    formBtn: {
-        width: '40%',
-        height: 40,
-        backgroundColor: '#6c781086',
-        justifyContent: 'center',
+    search: {
+        position: 'absolute',
+        right: 20,
+        height: '100%',
+        backgroundColor: 'rgba(25, 111, 61 , 0.8)',
+        width: 40,
         alignItems: 'center',
-        marginHorizontal: 'auto',
-        borderRadius: 5
+        justifyContent: 'center',
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5
     }
 })

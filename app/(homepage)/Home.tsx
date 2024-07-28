@@ -1,7 +1,8 @@
 
 
+import Banner from "@/components/Banner";
 import HomeInput from "@/components/HomeInput";
-import Recipes from "@/components/Recipes";
+import StackedCards from "@/components/StackedCards";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 
@@ -16,7 +17,7 @@ export default function Home() {
             <Animated.View
                 entering={FadeIn}
 
-                style={[styles.mainWrapper, { height: height / 7 }]}
+                style={[styles.mainWrapper, { height: height / 9 }]}
             >
                 <View
                     style={styles.contentWrapper}
@@ -25,7 +26,8 @@ export default function Home() {
                 </View>
             </Animated.View>
 
-            <Recipes />
+            <StackedCards />
+            <Banner />
         </View>
     )
 }
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
     mainWrapper: {
         width: '100%',
         marginHorizontal: 'auto',
-        backgroundColor: 'white'
     },
     contentWrapper: {
         flex: 1,
