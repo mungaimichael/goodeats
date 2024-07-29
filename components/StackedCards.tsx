@@ -1,4 +1,5 @@
 import { transform } from "@babel/core";
+import { useState } from "react";
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInRight, FadeInUp, FadeOutUp } from "react-native-reanimated";
 import { useSelector } from "react-redux";
@@ -9,6 +10,11 @@ const { height } = Dimensions.get('screen');
 
 export default function StackedCards() {
 
+    // keep track of index to show card on top 
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+
+
 
 
     // get the recipe from the redux store
@@ -17,32 +23,44 @@ export default function StackedCards() {
 
 
 
+    const [activeCard, setActiveCard] = useState<boolean>(false)
+
+
+    const clickActiveCard = () => setActiveCard((prev) => !prev);
     return (
 
-        <View
-            style={[styles.mainWrapper, { height: height / 6, }]}
+        <Animated.View
+            entering={FadeInRight}
+
+            style={[styles.mainWrapper, { height: activeCard ? height / 2.7 : height / 6, }]}
         >
             {
-                new Array(3).fill([1, 0.5, 0.2]).map((val, index) => (
+                new Array(3).fill(null).map((_, index) => (
 
                     <SingleCard
                         key={index}
                         index={index}
+                        clickActiveCard={clickActiveCard}
+                        active={activeCard}
                     />
                 ))
             }
 
-            {/* <SingleCard /> */}
-        </View>
+        </Animated.View>
     )
 }
 
 
 type args = {
     key?: any,
-    index: number
+    index: number,
+    clickActiveCard: () => void
+    active: boolean
+
 }
-function SingleCard({ index }: args) {
+
+
+function SingleCard({ index, active, clickActiveCard }: args) {
 
     const scale = index === 0 ? 1 :
         index === 1 ? 0.95 :
@@ -50,8 +68,9 @@ function SingleCard({ index }: args) {
                 0.4;
 
     return (
+
         <Animated.View
-            entering={FadeInRight}
+
 
             style={[styles.singleCard,
 
@@ -59,15 +78,16 @@ function SingleCard({ index }: args) {
                 zIndex: -index,
                 transform: [
                     {
-                        translateY: 9 * index
+                        translateY: !active ? 9 * index : 0
                     },
                     {
-                        scale
+                        scale: active ? 1 : scale
                     }
                 ],
-                backgroundColor: scale === 1 ? `rgba(25, 111, 61, 1)` : `rgba(25, 111, 61, 0.6)`,
-                opacity: scale === 1 ? 1 : scale - 0.3
-
+                backgroundColor: !active ? scale === 1 ? `rgba(25, 111, 61, 1)` : `rgba(25, 111, 61, 0.6)` : "rgba(25, 111, 61, 1)",
+                opacity: !active ? scale === 1 ? 1 : scale - 0.3 : 1,
+                position: active ? "relative" : "absolute",
+                marginVertical: 2
 
             }
             ]}
@@ -80,19 +100,23 @@ function SingleCard({ index }: args) {
                 >Instant Meal Prep Ideas</Text>
                 <Text
                     style={[styles.text, { fontFamily: 'regular' }]}
-                >Less Hustle. More Fun</Text>
+                >Less Hustle. More Fun {active ? "active" : "not active"}</Text>
                 <Pressable
                     style={{ width: 50, height: 20, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}
                 >
                     <Text
                         style={{ fontFamily: 'regular' }}
-                    >Try</Text>
+                    >{index}</Text>
                 </Pressable>
             </View>
-            <Image
-                source={require("../assets/images/arrow-right.png")}
-                style={{ width: 25, height: 25, marginRight: 10, top: 5 }}
-            />
+            <Pressable
+                onPress={clickActiveCard}
+            >
+                <Image
+                    source={require("../assets/images/arrow-right.png")}
+                    style={{ width: 25, height: 25, marginRight: 10, top: 5 }}
+                />
+            </Pressable>
         </Animated.View>
     )
 }
@@ -110,9 +134,9 @@ const styles = StyleSheet.create({
     },
     singleCard: {
         width: '100%',
-        height: '60%',
+        height: 100,
 
-        position: 'absolute',
+
         borderCurve: 'continuous',
         shadowColor: '#716d6d',
         shadowOffset: { width: 0, height: 0 },
