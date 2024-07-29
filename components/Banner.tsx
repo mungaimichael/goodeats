@@ -21,10 +21,10 @@ export default function Banner() {
                 >Learn How To in less than 2 min</Text>
             </View>
             <View
-                style={{ flex: 2, width: '70%', height: '100%', overflow: 'hidden' }}
+                style={{ flex: 2, width: '70%', height: '100%', overflow: 'hidden', borderRadius: 15 }}
             >
                 <Image
-                    style={{ width: "140%", height: '130%', right: 3, top: -40, borderRadius: 10 }}
+                    style={{ width: "140%", height: '150%', right: 3, top: -40, borderRadius: 10 }}
                     source={require("../assets/images/chicken.png")}
                 />
             </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     banner: {
         backgroundColor: '#6c781020',
         flexDirection: 'row',
-        width: '90%',
+        width: '85%',
         marginHorizontal: 'auto',
         justifyContent: 'space-between',
         alignItems: 'center',
