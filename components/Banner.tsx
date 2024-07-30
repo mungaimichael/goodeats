@@ -7,7 +7,7 @@ export default function Banner() {
 
     return (
         <View
-            style={[styles.banner, { height: height / 7, }]}
+            style={[styles.banner, { height: height / 8, }]}
         >
 
             <View
