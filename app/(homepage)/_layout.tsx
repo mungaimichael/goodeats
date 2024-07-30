@@ -53,9 +53,10 @@ export default function _layout() {
             })}
         >
             <Stack.Screen
-                name="Home"
-
-
+                options={{
+                    headerShown: false
+                }}
+                name="(tabs)"
             />
         </Stack>
     )

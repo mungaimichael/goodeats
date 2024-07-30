@@ -97,7 +97,7 @@ const Signup = () => {
 
 
                 <Pressable
-                    onPress={() => { onFormSubmit(); router.push('/(homepage)/Home') }}
+                    onPress={() => { onFormSubmit(); router.push('/(homepage)/(tabs)') }}
                     style={styles.button}
                 >
                     <Text
