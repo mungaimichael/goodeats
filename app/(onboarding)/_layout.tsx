@@ -11,7 +11,7 @@ const Layout = () => {
     return (
         <Stack
             screenOptions={{
-                
+
                 headerShadowVisible: false,
                 headerTitleAlign: 'center',
                 headerStyle: {
@@ -37,12 +37,12 @@ const Layout = () => {
             }}
         >
             <Stack.Screen
-                name='Welcome'
+                name='index'
 
             />
             <Stack.Screen
                 name="Welcome2"
-            
+
             />
         </Stack>
     )

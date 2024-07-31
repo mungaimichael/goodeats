@@ -46,7 +46,15 @@ export default function RootLayout() {
           <StatusBar
             style={colorScheme === 'dark' ? "dark" : 'dark'}
           />
-          <Slot />
+          <Stack
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <Stack.Screen
+              name='(onboarding)'
+            />
+          </Stack>
         </ThemeProvider>
       </Provider>
     </GestureHandlerRootView>
