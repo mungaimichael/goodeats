@@ -58,6 +58,12 @@ export default function _layout() {
                 }}
                 name="(tabs)"
             />
+            <Stack.Screen
+                name="SearchModal"
+                options={{
+                    presentation: 'modal'
+                }}
+            />
         </Stack>
     )
 }
