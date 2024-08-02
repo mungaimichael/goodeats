@@ -1,10 +1,14 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 
+import * as Sharing from "expo-sharing"
+
+
 import mealPrepCollection from "../data";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import { Link } from "expo-router";
 import { useState } from "react";
+import Pager from "@/components/Pager";
 
 export default function SearchModal() {
 
@@ -12,7 +16,12 @@ export default function SearchModal() {
 
     const { title, recipes } = mealPrepCollection
 
-    const { name, ingredients, instructions } = recipes[0]
+    const { name } = recipes[0]
+
+
+    // sharing
+
+
 
     return (
         <Animated.View
@@ -44,14 +53,14 @@ export default function SearchModal() {
                     style={{ width: '30%', justifyContent: 'center', alignItems: 'center' }}
                 ><Text
                     style={{ fontFamily: 'semiBold', fontSize: 14, padding: 10, borderRadius: 10, backgroundColor: "#fff" }}
-                >Details</Text></Pressable>
+                >Ingredients</Text></Pressable>
 
                 <Pressable
                     style={{ width: '30%', justifyContent: 'center', alignItems: 'center' }}
 
                 ><Text
-                    style={{ fontFamily: 'semiBold', fontSize: 14, padding: 10, borderRadius: 10, backgroundColor: "#EFD5B4" }}
-                >Ingredients</Text></Pressable>
+                    style={{ fontFamily: 'semiBold', fontSize: 14, padding: 10, borderRadius: 10, backgroundColor: "#fff" }}
+                >Details</Text></Pressable>
                 <Pressable
                     style={{ width: '30%', justifyContent: 'center', alignItems: 'center' }}
 
@@ -62,6 +71,9 @@ export default function SearchModal() {
 
 
 
+
+            {/* Pager View */}
+            <Pager />
         </Animated.View>
     )
 }
