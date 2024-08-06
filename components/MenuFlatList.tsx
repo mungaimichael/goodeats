@@ -2,32 +2,49 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
 export default function MenuFlatList() {
 
-    const data: Array<dataType> = [{
-        image: require('../assets/images/one.jpg'),
-        title: "",
-        prepTime: ""
-    },
-    {
-        image: require('../assets/images/two.jpg'),
-        title: "",
-        prepTime: ""
-    },
-    {
-        image: require('../assets/images/three.jpg'),
-        title: "",
-        prepTime: ""
-    },
-    {
-        image: require('../assets/images/four.jpg'),
-        title: "",
-        prepTime: ""
-    },
-    {
-        image: require('../assets/images/one.jpg'),
-        title: "",
-        prepTime: ""
-    },
-    ]
+    const data: dataType[] = [
+        {
+            image: require('../assets/images/one.jpg'),
+            title: "Spaghetti Carbonara",
+            prepTime: "20 mins"
+        },
+        {
+            image: require('../assets/images/two.jpg'),
+            title: "Caesar Salad",
+            prepTime: "15 mins"
+        },
+        {
+            image: require('../assets/images/three.jpg'),
+            title: "Chicken Curry",
+            prepTime: "30 mins"
+        },
+        {
+            image: require('../assets/images/four.jpg'),
+            title: "Beef Tacos",
+            prepTime: "25 mins"
+        },
+        {
+            image: require('../assets/images/four.jpg'),
+            title: "Grilled Cheese Sandwich",
+            prepTime: "10 mins"
+        },
+        {
+            image: require('../assets/images/three.jpg'),
+            title: "Vegetable Stir Fry",
+            prepTime: "20 mins"
+        },
+        {
+            image: require('../assets/images/two.jpg'),
+            title: "Pancakes",
+            prepTime: "15 mins"
+        },
+        {
+            image: require('../assets/images/one.jpg'),
+            title: "Chocolate Cake",
+            prepTime: "1 hr"
+        },
+    ];
+
 
 
     return <FlatList
@@ -43,9 +60,18 @@ export default function MenuFlatList() {
                 >
                     <Image
                         source={image}
-                        style={{ resizeMode: 'contain', width: '100%', height: '100%' }}
+                        style={styles.image}
                     />
-                    <Text>title</Text>
+                    <Text>{title}</Text>
+                    <View
+                        style={{ width: '100%', flexDirection: 'row' }}
+                    >
+                        <Image
+                            source={require("../assets/images/timer.png")}
+                            style={{ height: 14, width: 14 }}
+                        />
+                        <Text>{prepTime}</Text>
+                    </View>
                 </View>
             )
         }
@@ -63,13 +89,21 @@ interface dataType {
 const styles = StyleSheet.create({
     wrapper: {
         marginTop: 20,
-        marginLeft: 15
+        marginLeft: 15,
+
 
     },
     item: {
-        height: 120,
-        width: 100,
-        marginHorizontal: 5,
-        backgroundColor: 'whitesmoke'
+        height: 230,
+        width: 130,
+        marginHorizontal: 8,
+        borderRadius: 8
+
+    },
+    image: {
+        borderRadius: 8,
+        resizeMode: "cover",
+        width: '100%',
+        height: '80%'
     }
 })
