@@ -18,6 +18,7 @@ export default function _layout() {
 
 
 
+
     const opacityShared = useSharedValue(0)
     const AnimatedText = Animated.createAnimatedComponent(Text);
 
