@@ -62,15 +62,20 @@ export default function MenuFlatList() {
                         source={image}
                         style={styles.image}
                     />
-                    <Text>{title}</Text>
+                    <Text
+                        style={{ fontFamily: "regular", fontSize: 14, marginTop: 2 }}
+                    >{title}</Text>
                     <View
-                        style={{ width: '100%', flexDirection: 'row' }}
+                        style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', gap: 10, alignItems: "center" }}
                     >
                         <Image
                             source={require("../assets/images/timer.png")}
                             style={{ height: 14, width: 14 }}
                         />
-                        <Text>{prepTime}</Text>
+                        <Text
+                            style={{ fontFamily: "regular", fontSize: 14 }}
+
+                        >{prepTime}</Text>
                     </View>
                 </View>
             )
