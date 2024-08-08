@@ -47,41 +47,45 @@ export default function MenuFlatList() {
 
 
 
-    return <FlatList
-        showsHorizontalScrollIndicator={false}
-        style={styles.wrapper}
-        horizontal
-        data={data}
-        renderItem={({ item }) => {
-            const { image, title, prepTime } = item
-            return (
-                <View
-                    style={styles.item}
-                >
-                    <Image
-                        source={image}
-                        style={styles.image}
-                    />
-                    <Text
-                        style={{ fontFamily: "regular", fontSize: 14, marginTop: 2 }}
-                    >{title}</Text>
+    return (
+        <FlatList
+            showsHorizontalScrollIndicator={false}
+            style={styles.wrapper}
+            horizontal
+            data={data}
+            renderItem={({ item }) => {
+                const { image, title, prepTime } = item
+                return (
                     <View
-                        style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', gap: 10, alignItems: "center" }}
+                        style={styles.item}
                     >
                         <Image
-                            source={require("../assets/images/timer.png")}
-                            style={{ height: 14, width: 14 }}
+                            source={image}
+                            style={styles.image}
                         />
                         <Text
-                            style={{ fontFamily: "regular", fontSize: 14 }}
+                            style={{ fontFamily: "regular", fontSize: 14, marginTop: 2 }}
+                        >{title}</Text>
+                        <View
+                            style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', gap: 10, alignItems: "center" }}
+                        >
+                            <Image
+                                source={require("../assets/images/timer.png")}
+                                style={{ height: 14, width: 14 }}
+                            />
+                            <Text
+                                style={{ fontFamily: "regular", fontSize: 14 }}
 
-                        >{prepTime}</Text>
+                            >{prepTime}</Text>
+                        </View>
                     </View>
-                </View>
-            )
-        }
-        }
-    />
+                )
+            }
+            }
+        />
+    )
+
+
 }
 
 interface dataType {
@@ -99,8 +103,8 @@ const styles = StyleSheet.create({
 
     },
     item: {
-        height: 230,
-        width: 130,
+        height: 250,
+        width: 150,
         marginHorizontal: 8,
         borderRadius: 8
 
