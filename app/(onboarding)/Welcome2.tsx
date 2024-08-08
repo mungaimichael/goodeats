@@ -1,6 +1,6 @@
 import { Link, router } from 'expo-router';
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Welcome2 = () => {
 
@@ -59,15 +59,32 @@ const Welcome2 = () => {
                     style={styles.buttonWrapper}
                 >
                     <Image source={require("../../assets/images/dot.png")} style={{ height: 40, width: 40 }} />
-                    <TouchableOpacity
-                        onPress={() => router.push('(auth)/Signup')}
-                        style={[styles.button]}>
-                        <Text style={[styles.buttonText, { color: 'white' }]} >
-                            Get Started
-                        </Text>
-                    </TouchableOpacity>
-                    <Link style={[styles.buttonText, styles.button, { backgroundColor: "#91EE91", textAlign: 'center' }]} href="/authentication/SignIn">
-                        Sign In
+                    <Link
+                        asChild
+                        href="/(auth)/Signup"
+                        style={[styles.button]}
+
+                    >
+                        <Pressable
+                        >
+                            <Text style={[styles.buttonText, { color: 'white' }]} >
+                                Get Started
+                            </Text>
+                        </Pressable>
+
+                    </Link>
+                    <Link
+                        asChild
+                        href="/Signup"
+                        style={[styles.button, { backgroundColor: "#91EE91" }]}
+
+                    >
+                        <Pressable
+                        >
+                            <Text
+                                style={styles.buttonText}
+                            >Sign In</Text>
+                        </Pressable>
                     </Link>
                 </View>
             </View>
