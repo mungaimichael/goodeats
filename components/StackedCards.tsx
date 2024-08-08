@@ -1,7 +1,7 @@
 import { transform } from "@babel/core";
 import { useState } from "react";
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
-import Animated, { FadeInRight, FadeInUp, FadeOutUp } from "react-native-reanimated";
+import Animated, { FadeInRight, FadeInUp, FadeOutUp, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 
 
@@ -12,6 +12,10 @@ export default function StackedCards() {
 
     // keep track of index to show card on top 
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+
+
+
 
 
 
@@ -62,34 +66,55 @@ type args = {
 
 function SingleCard({ index, active, clickActiveCard }: args) {
 
-    const scale = index === 0 ? 1 :
+
+    // shared value to handle animation
+
+    const progress = useSharedValue(1);
+
+    const scale = useSharedValue(index === 0 ? 1 :
         index === 1 ? 0.95 :
             index === 2 ? 0.9 :
-                0.4;
+                0.4)
+
+
+
+
+
+    const cardAnimatedStyle = useAnimatedStyle(() => {
+
+        return {
+            transform: [
+                {
+                    translateY: progress.value === 1 ? 9 * index : 0
+                },
+                {
+                    scale: progress.value === 1 ? scale.value : 1
+                }
+            ],
+            backgroundColor: progress.value === 0 ? scale.value === 1 ? `rgba(25, 111, 61, 1)` : `rgba(25, 111, 61, 0.6)` : "rgba(25, 111, 61, 1)",
+            opacity: progress.value === 0 ? scale.value === 1 ? 1 : scale.value - 0.5 : 1,
+
+            position: "absolute"
+
+        }
+    })
 
     return (
 
         <Animated.View
 
 
-            style={[styles.singleCard,
 
-            {
-                zIndex: -index,
-                transform: [
-                    {
-                        translateY: !active ? 9 * index : 0
-                    },
-                    {
-                        scale: active ? 1 : scale
-                    }
-                ],
-                backgroundColor: !active ? scale === 1 ? `rgba(25, 111, 61, 1)` : `rgba(25, 111, 61, 0.6)` : "rgba(25, 111, 61, 1)",
-                opacity: !active ? scale === 1 ? 1 : scale - 0.3 : 1,
-                position: active ? "relative" : "absolute",
-                marginVertical: 2
+            style={[
+                styles.singleCard,
+                cardAnimatedStyle,
 
-            }
+
+                {
+                    zIndex: -index,
+
+
+                }
             ]}
         >
             <View
@@ -100,17 +125,17 @@ function SingleCard({ index, active, clickActiveCard }: args) {
                 >Instant Meal Prep Ideas</Text>
                 <Text
                     style={[styles.text, { fontFamily: 'regular' }]}
-                >Less Hustle. More Fun {active ? "active" : "not active"}</Text>
+                >Less Hustle. More Fun {progress.value === 0 ? "active" : "not active"}</Text>
                 <Pressable
                     style={{ width: 50, height: 20, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}
                 >
                     <Text
-                        style={{ fontFamily: 'regular' }}
-                    >{index}</Text>
+                        style={{ fontFamily: 'semiBold' }}
+                    >{progress.value}</Text>
                 </Pressable>
             </View>
             <Pressable
-                onPress={clickActiveCard}
+                onPress={() => { clickActiveCard(); progress.value = progress.value === 0 ? 1 : 0 }}
             >
                 <Image
                     source={require("../assets/images/arrow-right.png")}
@@ -135,8 +160,6 @@ const styles = StyleSheet.create({
     singleCard: {
         width: '100%',
         height: 100,
-
-
         borderCurve: 'continuous',
         shadowColor: '#716d6d',
         shadowOffset: { width: 0, height: 0 },
@@ -147,7 +170,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-        borderWidth: 1,
+        borderWidth: 2,
         elevation: 6,
         borderColor: '#a0a0a0',
 
