@@ -9,11 +9,24 @@ const {
 
 
 interface initial {
-    query: string,
-    searchedData: {} | null,
+    query: string[],
+    searchedData: MealData | null,
     loading: boolean,
     error: string | null
 }
+
+interface Meal {
+    name: string;
+    prep_time: string;
+    cook_time: string;
+    ingredients: string[];
+    instructions: string[];
+};
+
+interface MealData {
+    meals: Meal[];
+};
+
 
 
 // async call to the api
@@ -35,7 +48,7 @@ const generationConfig = {
     maxOutputTokens: 8192,
 
     generationConfig: {
-        responseMimeType: "application/json",
+        responseMimeType: "application/text",
     }
 }
 
@@ -43,19 +56,34 @@ const generationConfig = {
 export const fetchChatData = createAsyncThunk(
     'chat/sendUserQuery',
 
-    async (search: string) => {
+    async (search: Array<string>) => {
+
+
 
         try {
             const chatSession = model.startChat({
                 generationConfig
             });
 
-            // const result = await chatSession.sendMessage(`Short and easy meal prep using ${search}`);
 
 
-            const result = await model.generateContent(`easy meal prep using ${search} in a structured json format`)
+            const result = await model.generateContent(`easy meal prep using ${search.map(item => item)} in json following 
+                this format interface Meal {
+    name: string;
+    prep_time: string;
+    cook_time: string;
+    ingredients: string[];
+    instructions: string[];
+} and interface MealData {
+    meals: Meal[];
+};
+remove anything else outside the json
+            `)
+
+
 
             const data = await result.response.text()
+
 
             return data
 
@@ -69,7 +97,7 @@ export const fetchChatData = createAsyncThunk(
 const DataFetchSlice = createSlice({
     name: 'chat',
     initialState: {
-        query: '',
+        query: [],
         searchedData: null,
         loading: false,
         error: null
@@ -77,7 +105,8 @@ const DataFetchSlice = createSlice({
 
     reducers: {
         addQueryString: (state, action: PayloadAction<{ query: string }>) => {
-            state.query = action.payload.query;
+            const { query } = action.payload
+            state.query = [...state.query, query];
         }
     },
     extraReducers: (builder) => {
@@ -88,9 +117,28 @@ const DataFetchSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchChatData.fulfilled, (state, action) => {
-                state.loading = false;
-                state.searchedData = action.payload;
-                console.log('fulfilled', action.payload)
+
+
+                function cleanAndParseJSON(responseString: string) {
+                    // Remove backticks at the beginning and end of the string
+                    const cleanedString = responseString.replace(/```json/g, '').replace(/```/g, '').trim();
+
+                    // Parse the cleaned string as JSON
+                    try {
+                        const parsedJSON = JSON.parse(cleanedString);
+                        return parsedJSON;
+                    } catch (error) {
+                        console.error("Invalid JSON format:", error);
+                        return null;
+                    }
+                }
+
+                const data = cleanAndParseJSON(action.payload)
+
+
+                state.loading = false
+                state.searchedData = data
+                console.log('fulfilled', data)
 
             })
             .addCase(fetchChatData.rejected, (state, action) => {
