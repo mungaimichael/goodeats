@@ -6,6 +6,7 @@ import Animated, { useHandler, useEvent, FadeOutLeft, FadeInRight, FadeIn } from
 
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
+import { useSelector } from 'react-redux';
 
 const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -29,9 +30,13 @@ export function usePagerScrollHandler(handlers: any, dependencies?: any) {
 export default () => {
 
 
-    const { title, recipes } = mealPrepCollection
+    const { searchedData: { meals } } = useSelector(state => state.queryData);
 
-    const { name, ingredients, instructions } = recipes[0]
+    const {
+        name,
+        ingredients,
+        instructions
+    } = meals[0]
 
     const handler = usePagerScrollHandler({
         onPageScroll: (e: any) => {

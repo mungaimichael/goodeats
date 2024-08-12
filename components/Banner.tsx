@@ -7,7 +7,7 @@ export default function Banner() {
 
     return (
         <View
-            style={[styles.banner, { height: height / 8, }]}
+            style={[styles.banner, { height: height / 9, }]}
         >
 
             <View
@@ -21,11 +21,11 @@ export default function Banner() {
                 >Learn How To in less than 2 min</Text>
             </View>
             <View
-                style={{ flex: 2, width: '70%', height: '100%', overflow: 'hidden', borderRadius: 15 }}
+                style={{ height: '100%', width: "40%", alignItems: 'center', borderRadius: 15, backgroundColor: "#5e3602" }}
             >
                 <Image
-                    style={{ width: "140%", height: '150%', right: 3, top: -40, borderRadius: 10 }}
-                    source={require("../assets/images/chicken.png")}
+                    style={{ width: "60%", height: '100%', resizeMode: 'contain' }}
+                    source={require("../assets/images/food.png")}
                 />
             </View>
         </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     banner: {
         backgroundColor: '#6c781020',
         flexDirection: 'row',
-        width: '85%',
+        width: '90%',
         marginHorizontal: 'auto',
         justifyContent: 'space-between',
         alignItems: 'center',

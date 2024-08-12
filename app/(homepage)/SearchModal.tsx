@@ -9,17 +9,23 @@ import Animated, { FadeInLeft } from "react-native-reanimated";
 import { Link } from "expo-router";
 import { useState } from "react";
 import Pager from "@/components/Pager";
+import { useSelector } from "react-redux";
 
 export default function SearchModal() {
 
     const [active, setActive] = useState<boolean>(true)
 
-    const { title, recipes } = mealPrepCollection
-
-    const { name } = recipes[0]
 
 
-    // sharing
+
+
+    //   Redux
+
+
+    const { searchedData: { meals } } = useSelector(state => state.queryData)
+
+    const first = meals[0]
+    const { name: title } = first
 
 
 
@@ -40,7 +46,7 @@ export default function SearchModal() {
                 <Text
                     style={{ fontFamily: 'loraBold', fontSize: 35, width: '70%', textAlign: 'center' }}
                 >
-                    {name}
+                    {title}
                 </Text>
             </View>
 
@@ -74,6 +80,16 @@ export default function SearchModal() {
 
             {/* Pager View */}
             <Pager />
+
+
+            <Pressable
+                onPress={() => console.log(name)}
+                style={{ position: 'absolute', bottom: 6, width: '80%', backgroundColor: "#4F6C4E", height: 45, borderRadius: 9, marginHorizontal: 40, justifyContent: "center", alignItems: 'center' }}
+            >
+                <Text
+                    style={{ fontFamily: 'loraBold', fontSize: 20, color: '#F0D6B5' }}
+                >Regenerate Recipe</Text>
+            </Pressable>
         </Animated.View>
     )
 }
